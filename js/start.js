@@ -16,16 +16,27 @@ var positionText = {
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
-  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - 40, y + 40);
+  ctx.bezierCurveTo(x - 40, y + 40, x + 20, y + 80, x - 40, y + 120);
+  ctx.bezierCurveTo(x - 40, y + 120, x - 100, y + 180, x, y + 270);
+  ctx.bezierCurveTo(x, y + 270, x + 210, y + 250, x + CLOUD_WIDTH, y + 270);
+  ctx.bezierCurveTo(x + CLOUD_WIDTH, y + 270, x + 380, y + 220, x + CLOUD_WIDTH, y + 180);
+  ctx.bezierCurveTo(x + CLOUD_WIDTH, y + 180, x + 460, y + 80, x + 360, y);
+  ctx.bezierCurveTo(x + 360, y, x + 400, y + 50, x + 320, y + 90);
+  ctx.bezierCurveTo(x + 320, y + 90, x + 160, y + 30, x + 200, y - 10);
+  ctx.closePath();
+  ctx.fill();
 };
 
 var getMaxElement = function (times) {
   var maxElement = times[0];
-  for (var i = 1; i < times.length; i++) {
-    if (times[i] > maxElement) {
-      maxElement = times[i];
+  times.forEach(function (time) {
+    if (time > maxElement) {
+      maxElement = time;
     }
-  }
+  });
   return maxElement;
 };
 
@@ -41,21 +52,14 @@ window.renderStatistics = function (ctx, names, times) {
 
   var maxTime = getMaxElement(times);
 
-  for (var i = 0; i <= names.length - 1; i++) {
+  names.forEach(function (name, i) {
     var columnHeigh = Math.round(times[i] / maxTime * 100);
-
-    if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      ctx.fillStyle = 'hsla(240, ' + (Math.random() * 100) + '%, 50%, 1)';
-    }
-
+    ctx.fillStyle = name === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'hsla(240, ' + (Math.random() * 100) + '%, 50%, 1)';
     ctx.fillRect(CLOUD_X + COLUMN_GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - columnHeigh - GAP * 2 - FONT_SIZE, COLUMN_WIDTH, columnHeigh);
-
     ctx.fillStyle = '#000';
     ctx.textBaseline = 'bottom';
-    ctx.fillText(names[i], CLOUD_X + COLUMN_GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - GAP);
+    ctx.fillText(name, CLOUD_X + COLUMN_GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - GAP);
     ctx.fillText(Math.round(times[i]), CLOUD_X + COLUMN_GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - columnHeigh - GAP * 3 - FONT_SIZE);
-  }
+  });
 };
 
