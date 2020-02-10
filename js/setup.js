@@ -1,64 +1,117 @@
 'use strict';
+
+var Wizards = {
+  FIRST_NAME: [
+    'Иван',
+    'Хуан Себастьян',
+    'Мария',
+    'Кристоф',
+    'Виктор',
+    'Юлия',
+    'Люпита',
+    'Вашингтон'
+  ],
+  LAST_NAME: [
+    'да Марья',
+    'Верон',
+    'Мирабелла',
+    'Вальц',
+    'Онопко',
+    'Топольницкая',
+    'Нионго',
+    'Ирвинг'
+  ],
+  COAT_COLOR: [
+    'rgb(101, 137, 164)',
+    'rgb(241, 43, 107)',
+    'rgb(146, 100, 161)',
+    'rgb(56, 159, 117)',
+    'rgb(215, 210, 55)',
+    'rgb(0, 0, 0)'
+  ],
+  EYES_COLOR: [
+    'black',
+    'red',
+    'blue',
+    'yellow',
+    'green'
+  ]
+};
+
+var COUNT = 4;
+
+/**
+ * функция генерации случайных чисел
+ * @param {number} min - минимальное значение
+ * @param {number} max - максимальное значение
+ * @return {number} случайное число из диапазона
+ */
+var getRandomNumber = function (min, max) {
+  return Math.floor(Math.random() * max) + min;
+};
+
+/**
+ * функция генерации случайного значения из массива без повторений
+ * @param {Array} array - массив
+ * @return {*} случайный элемент из массива
+ */
+var getRandomElementFromArray = function (array) {
+  var randomElement = array[getRandomNumber(0, array.length - 1)];
+  array.splice(array.indexOf(randomElement, 0), 1);
+  return randomElement;
+};
+
+/**
+ * функция создания массива объектов магов со случайными свойствами
+ * @param {Array} names - имена магов
+ * @param {Array} lastNames - фамилии магов
+ * @param {Array} coatColors - цвет плаща магов
+ * @param {Array} eyesColors -  цвет глаз магов
+ * @param {number} cont -  колличество
+ * @return {Array} массив объектов со случайными свойствами
+ */
+var createRandomWizards = function (names, lastNames, coatColors, eyesColors, cont) {
+  var wizards = [];
+  for (var i = 0; i < cont; i++) {
+    var wizard = {
+      name: getRandomElementFromArray(names) + ' ' + getRandomElementFromArray(lastNames),
+      coatColor: getRandomElementFromArray(coatColors),
+      eyesColor: getRandomElementFromArray(eyesColors)
+    };
+    wizards.push(wizard);
+  }
+  return wizards;
+};
+
 //  удоляем класс hidden
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
 
-
-var wizardsFirstName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var wizardsLastName = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var wizardsCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var wizardsEyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
-
-//  функция генерации случайных чисел (параметры мин и мах)
-var getRandom = function (min, max) {
-  return Math.floor(Math.random() * max) + min;
-};
-
-//  Cоздаем рандомного мага (параметры: массивы: имена магов, фамилии магов, цвет плаща, цвет глаз)
-var createRandomWizards = function (names, lastNames, coatColor, eyesColor) {
-  var randonWizards = [];
-  for (var i = 0; i < 4; i++) {
-    var wizardName = names[getRandom(0, names.length)] + ' ' + lastNames[getRandom(0, lastNames.length)];
-    var wizardCoatColor = coatColor[getRandom(0, coatColor.length)];
-    var wizardEyesColor = eyesColor[getRandom(0, eyesColor.length)];
-    var wizardOne = {
-      name: wizardName,
-      coatColor: wizardCoatColor,
-      eyesColor: wizardEyesColor
-    };
-    randonWizards.push(wizardOne);
-  }
-  return randonWizards;
-};
-//  вызываем функцию  записываем ее в переменную wizards
-var wizars = createRandomWizards(wizardsFirstName, wizardsLastName, wizardsCoatColor, wizardsEyesColor);
-//  находим элемент Template (шаблон)
+// находим блок .setup-similar-list, куда  будем добовлять сгенерированные DOM-элементы (карточки магов)
 var similarListElement = document.querySelector('.setup-similar-list');
+
+// вызываем функцию создания массива объектов магов со случайными свойствами и записываем массив в переменную
+var otherWizards = createRandomWizards(Wizards.FIRST_NAME, Wizards.LAST_NAME, Wizards.COAT_COLOR, Wizards.EYES_COLOR, COUNT);
+
+//  находим элемент Template (шаблон)
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-//  создаем карточку мага по шаблону (параметы wizars - массив объектов характеристик мага)
-var renderWizard = function (wizard) {
+// создаем новый документ
+var fragment = document.createDocumentFragment();
+
+// генерируем DOM-элементы (карточки магов) (проходим по массиву объектов магов со случайными свойствами, клонируем шаблон, заполняем его данными и добовляем в документ)
+otherWizards.forEach(function (otherWizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
-  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+  wizardElement.querySelector('.setup-similar-label').textContent = otherWizard.name;
+  wizardElement.querySelector('.wizard-coat').style.fill = otherWizard.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = otherWizard.eyesColor;
+  fragment.appendChild(wizardElement);
+});
 
-  return wizardElement;
-};
+// документ с карточками магов добовляем в блок .setup-similar-list
+similarListElement.appendChild(fragment);
 
-
-//  создаем 4 рандомные карточки магов (параметы wizars - массив объектов характеристик мага)
-var createWizard = function (wizars) {
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < 4; i++) {
-    fragment.appendChild(renderWizard(wizars[i]));
-  }
-  return similarListElement.appendChild(fragment);
-
-};
-
-createWizard(wizars);
-
-//  Удаляем класс hidden и показывем блок .setup-similar,
+//  Удаляем класс hidden и показывем блок .setup-similar
 document.querySelector('.setup-similar').classList.remove('hidden');
+
