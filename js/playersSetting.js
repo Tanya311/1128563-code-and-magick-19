@@ -3,42 +3,53 @@
 (function () {
   var userDialog = document.querySelector('.setup');
   var setupPlayer = userDialog.querySelector('.setup-player');
-  var wizardCoat = setupPlayer.querySelector('.wizard-coat');
-  var wizardEyes = setupPlayer.querySelector('.wizard-eyes');
-  var fireballColor = setupPlayer.querySelector('.setup-fireball');
+
   /**
   * функция изменнения цвета плаща
-  *
+  * @param {*} evt
   */
-  var coatColorChangeHandler = function () {
+  var changeCoatColor = function (evt) {
     var coatColor = window.util.getRandomElementFromArray(window.util.wizards.COAT_COLOR);
-    setupPlayer.querySelector('.wizard-coat').style.fill = coatColor;
+    evt.target.style.fill = coatColor;
     setupPlayer.querySelector('input[name=coat-color]').value = coatColor;
   };
 
-  wizardCoat.addEventListener('click', coatColorChangeHandler);
 
   /**
   * функция изменнения цвета глаз
-  *
+  * @param {*} evt
   */
-  var eyesColorChangeHandler = function () {
+  var changeEyesColor = function (evt) {
     var eyesColor = window.util.getRandomElementFromArray(window.util.wizards.EYES_COLOR);
-    wizardEyes.style.fill = eyesColor;
+    evt.target.style.fill = eyesColor;
     setupPlayer.querySelector('input[name=eyes-color]').value = eyesColor;
   };
 
-  wizardEyes.addEventListener('click', eyesColorChangeHandler);
-
   /**
   * функция изменнения цвета фаербола
-  *
+  * @param {*} evt
   */
-  var fireballColorChangeHandler = function () {
+  var changeFireballColor = function (evt) {
     var color = window.util.getRandomElementFromArray(window.util.wizards.FIREBALL_COLOR);
-    fireballColor.style.backgroundColor = color;
+    evt.target.style.backgroundColor = color;
     setupPlayer.querySelector('input[name=fireball-color]').value = color;
   };
-
-  fireballColor.addEventListener('click', fireballColorChangeHandler);
+  /**
+   * функция изменений персонажа
+  * @param {*} evt
+  */
+  function userDialogChangeHandler(evt) {
+    switch (true) {
+      case evt.target.matches('.wizard-coat'):
+        changeCoatColor(evt);
+        break;
+      case evt.target.matches('.wizard-eyes'):
+        changeEyesColor(evt);
+        break;
+      case evt.target.matches('.setup-fireball'):
+        changeFireballColor(evt);
+        break;
+    }
+  }
+  userDialog.addEventListener('click', userDialogChangeHandler);
 })();
