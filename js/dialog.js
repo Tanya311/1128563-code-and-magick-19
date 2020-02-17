@@ -59,6 +59,7 @@
       setupUserName.setCustomValidity('');
     }
   });
+  window.dialog = {
+    userDialog: userDialog
+  };
 })();
-
-
