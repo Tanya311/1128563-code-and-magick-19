@@ -1,34 +1,12 @@
 // Файл setup.js
 'use strict';
 (function () {
-  /**
-  * функция создания массива объектов магов со случайными свойствами
-  * @param {Array} names - имена магов
-  * @param {Array} lastNames - фамилии магов
-  * @param {Array} coatColors - цвет плаща магов
-  * @param {Array} eyesColors -  цвет глаз магов
-  * @param {number} cont -  колличество
-  * @return {Array} массив объектов со случайными свойствами
-  */
-  var createRandomWizards = function (names, lastNames, coatColors, eyesColors, cont) {
-    var wizards = [];
-    for (var i = 0; i < cont; i++) {
-      var wizard = {
-        name: window.util.getRandomElementFromArray(names) + ' ' + window.util.getRandomElementFromArray(lastNames),
-        coatColor: window.util.getRandomElementFromArray(coatColors),
-        eyesColor: window.util.getRandomElementFromArray(eyesColors)
-      };
-      wizards.push(wizard);
-    }
-    return wizards;
-  };
-
 
   // находим блок .setup-similar-list, куда  будем добовлять сгенерированные DOM-элементы (карточки магов)
   var similarListElement = document.querySelector('.setup-similar-list');
 
   // вызываем функцию создания массива объектов магов со случайными свойствами и записываем массив в переменную
-  var otherWizards = createRandomWizards(window.util.wizards.FIRST_NAME, window.util.wizards.LAST_NAME, window.util.wizards.COAT_COLOR, window.util.wizards.EYES_COLOR, window.util.count);
+  var otherWizards = window.mocs.createRandomWizards(window.mocs.wizards.FIRST_NAME, window.mocs.wizards.LAST_NAME, window.mocs.wizards.COAT_COLOR, window.mocs.wizards.EYES_COLOR, window.mocs.count);
   //  находим элемент Template (шаблон)
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 

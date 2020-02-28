@@ -8,25 +8,25 @@
   var setupUserName = userDialog.querySelector('.setup-user-name');
 
   /**
-  * функция открытия окна
-  */
+   * функция открытия окна
+   */
   var popupOpenHandler = function () {
     userDialog.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
   };
 
   /**
-  * функция закрытия окна
-  */
+   * функция закрытия окна
+   */
   var popupCloseHandler = function () {
     userDialog.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
   /**
-  * функция закрытия окна по нажатию кнопки ESC
-  * @param {*} evt
-  */
+   * функция закрытия окна по нажатию кнопки ESC
+   * @param {*} evt
+   */
   var onPopupEscPress = function (evt) {
     if (evt.key === window.util.escapeKey && evt.target.className !== 'setup-user-name') {
       popupCloseHandler();
@@ -59,6 +59,8 @@
       setupUserName.setCustomValidity('');
     }
   });
+
+
   window.dialog = {
     userDialog: userDialog
   };

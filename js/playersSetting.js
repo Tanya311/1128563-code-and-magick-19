@@ -5,39 +5,39 @@
   var setupPlayer = userDialog.querySelector('.setup-player');
 
   /**
-  * функция изменнения цвета плаща
-  * @param {*} evt
-  */
+   * функция изменнения цвета плаща
+   * @param {*} evt
+   */
   var changeCoatColor = function (evt) {
-    var coatColor = window.util.getRandomElementFromArray(window.util.wizards.COAT_COLOR);
+    var coatColor = window.util.getRandomElementFromArray(window.mocs.wizards.COAT_COLOR);
     evt.target.style.fill = coatColor;
     setupPlayer.querySelector('input[name=coat-color]').value = coatColor;
   };
 
 
   /**
-  * функция изменнения цвета глаз
-  * @param {*} evt
-  */
+   * функция изменнения цвета глаз
+   * @param {*} evt
+   */
   var changeEyesColor = function (evt) {
-    var eyesColor = window.util.getRandomElementFromArray(window.util.wizards.EYES_COLOR);
+    var eyesColor = window.util.getRandomElementFromArray(window.mocs.wizards.EYES_COLOR);
     evt.target.style.fill = eyesColor;
     setupPlayer.querySelector('input[name=eyes-color]').value = eyesColor;
   };
 
   /**
-  * функция изменнения цвета фаербола
-  * @param {*} evt
-  */
+   * функция изменнения цвета фаербола
+   * @param {*} evt
+   */
   var changeFireballColor = function (evt) {
-    var color = window.util.getRandomElementFromArray(window.util.wizards.FIREBALL_COLOR);
+    var color = window.util.getRandomElementFromArray(window.mocs.wizards.FIREBALL_COLOR);
     evt.target.style.backgroundColor = color;
     setupPlayer.querySelector('input[name=fireball-color]').value = color;
   };
   /**
    * функция изменений персонажа
-  * @param {*} evt
-  */
+   * @param {*} evt
+   */
   function userDialogChangeHandler(evt) {
     switch (true) {
       case evt.target.matches('.wizard-coat'):
