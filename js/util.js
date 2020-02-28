@@ -3,6 +3,7 @@
 (function () {
   var ESC_KEY = 'Escape';
   var ENTER_KEY = 'Enter';
+  var COUNT = 4;
 
   /**
    * функция генерации случайных чисел
@@ -39,6 +40,7 @@
     getRandomNumber: getRandomNumber,
     getRandomElementFromArray: getRandomElementFromArray,
     getMaxElement: getMaxElement,
+    count: COUNT,
     escapeKey: ESC_KEY,
     enterKey: ENTER_KEY
   };

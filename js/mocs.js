@@ -46,7 +46,6 @@
     ]
   };
 
-  var COUNT = 4;
   /**
    * функция создания массива объектов магов со случайными свойствами
    * @param {Array} names - имена магов
@@ -72,6 +71,5 @@
   window.mocs = {
     createRandomWizards: createRandomWizards,
     wizards: Wizards,
-    count: COUNT
   };
 })();

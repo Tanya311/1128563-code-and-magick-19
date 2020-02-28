@@ -1,4 +1,4 @@
-// Файл setup.js
+// Файл card.js
 'use strict';
 (function () {
 
@@ -10,22 +10,48 @@
   //  находим элемент Template (шаблон)
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-  // создаем новый документ
-  var fragment = document.createDocumentFragment();
-
-  // генерируем DOM-элементы (карточки магов) (проходим по массиву объектов магов со случайными свойствами, клонируем шаблон, заполняем его данными и добовляем в документ)
-  otherWizards.forEach(function (otherWizard) {
+  var createWizard = function (otherWizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = otherWizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = otherWizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = otherWizard.eyesColor;
-    fragment.appendChild(wizardElement);
+    wizardElement.querySelector('.wizard-coat').style.fill = otherWizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = otherWizard.colorEyes;
+
+    return wizardElement;
+  };
+
+  /**
+   * @function renderWizards
+   * @description Отрисовывает волшебников
+   * @param {array} wizards массив волшебников
+   */
+ /* var renderWizards = function (wizards) {
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < window.mocs.count; i++) {
+      fragment.appendChild(createWizard(wizards[i]));
+    }
+
+    similarListElement.innerHTML = '';
+    similarListElement.appendChild(fragment);
+    document.querySelector('.setup-similar').classList.remove('hidden');
+  };
+  renderWizards(otherWizards);
+  */
+
+  window.backend.load(function (wizards) {
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < window.util.count; i++) {
+      fragment.appendChild(createWizard(wizards[i]));
+    }
+    similarListElement.appendChild(fragment);
+
+    document.querySelector('.setup-similar').classList.remove('hidden');
   });
 
-  // документ с карточками магов добовляем в блок .setup-similar-list
-  similarListElement.appendChild(fragment);
+  window.card = {
+    renderWizards: renderWizards
+  };
 
-  //  Удаляем класс hidden и показывем блок .setup-similar
-  document.querySelector('.setup-similar').classList.remove('hidden');
 })();

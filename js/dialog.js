@@ -6,6 +6,7 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = userDialog.querySelector('.setup-close');
   var setupUserName = userDialog.querySelector('.setup-user-name');
+  var similarListElement = userDialog.querySelector('.setup-similar-list');
 
   /**
    * функция открытия окна
@@ -59,6 +60,15 @@
       setupUserName.setCustomValidity('');
     }
   });
+
+  var form = document.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      userDialog.classList.add('hidden');
+    });
+    evt.preventDefault();
+  });
+
 
 
   window.dialog = {
