@@ -39,7 +39,7 @@
   renderWizards(otherWizards);
   */
 
-  window.backend.load(function (wizards) {
+ var successHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < window.util.count; i++) {
@@ -48,7 +48,21 @@
     similarListElement.appendChild(fragment);
 
     document.querySelector('.setup-similar').classList.remove('hidden');
-  });
+  };
+
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 30px auto; width: 550px; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '25px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(successHandler, errorHandler)
 
   window.card = {
     renderWizards: renderWizards
