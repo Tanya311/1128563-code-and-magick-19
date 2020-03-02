@@ -25,7 +25,7 @@
    * @description Отрисовывает волшебников
    * @param {array} wizards массив волшебников
    */
- /* var renderWizards = function (wizards) {
+  /* var renderWizards = function (wizards) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < window.mocs.count; i++) {
@@ -52,7 +52,7 @@
 
 
   window.backend.load(successHandler, window.backend.errorHandler);
-/*
+  /*
   window.card = {
     renderWizards: renderWizards
   };
