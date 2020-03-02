@@ -31,15 +31,6 @@
     ctx.fill();
   };
 
-  var getMaxElement = function (times) {
-    var maxElement = times[0];
-    times.forEach(function (time) {
-      if (time > maxElement) {
-        maxElement = time;
-      }
-    });
-    return maxElement;
-  };
 
   window.renderStatistics = function (ctx, names, times) {
     renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, ctx.fillStyle = 'rgb(' + Math.round(Math.random() * 255) + ',' + Math.round(Math.random() * 255) + ',' + Math.round(Math.random() * 255) + ')');
@@ -51,7 +42,7 @@
     ctx.fillText('Ура вы победили!', positionText.x, positionText.y);
     ctx.fillText('Список результатов: ', positionText.x, positionText.y + FONT_SIZE);
 
-    var maxTime = getMaxElement(times);
+    var maxTime = window.util.getMaxElement(times);
 
     names.forEach(function (name, i) {
       var columnHeigh = Math.round(times[i] / maxTime * 100);
