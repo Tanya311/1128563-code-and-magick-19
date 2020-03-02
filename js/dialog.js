@@ -64,9 +64,11 @@
   form.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(form), function () {
       userDialog.classList.add('hidden');
-    });
+    }, window.backend.errorHandler);
+
     evt.preventDefault();
   });
+
 
   window.dialog = {
     userDialog: userDialog
