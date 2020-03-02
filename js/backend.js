@@ -2,14 +2,19 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/code-and-magick';
+  var Url = {
+    POST: 'https://js.dump.academy/code-and-magick',
+    GET: 'https://js.dump.academy/code-and-magick/data',
+  };
+  var STATUS_CODE_OK = 200;
+  var TIMEOUT = 10000;
 
   var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_CODE_OK) {
         onLoad(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -17,21 +22,26 @@
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError('Произошла ошибка соединения. Повторите попытку');
     });
 
-    xhr.open('POST', URL);
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Проверьте соединение');
+    });
+
+    xhr.timeout = TIMEOUT; // 10s
+
+    xhr.open('POST', Url.POST);
     xhr.send(data);
   };
 
-  var URLGet = 'https://js.dump.academy/code-and-magick/data';
 
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_CODE_OK) {
         onLoad(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -39,15 +49,15 @@
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError('Произошла ошибка соединения. Повторите попытку');
     });
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Проверьте соединение');
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIMEOUT; // 10s
 
-    xhr.open('GET', URLGet);
+    xhr.open('GET', Url.GET);
     xhr.send();
   };
 

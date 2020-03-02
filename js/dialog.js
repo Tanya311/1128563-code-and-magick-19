@@ -6,7 +6,6 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = userDialog.querySelector('.setup-close');
   var setupUserName = userDialog.querySelector('.setup-user-name');
-  var similarListElement = userDialog.querySelector('.setup-similar-list');
 
   /**
    * функция открытия окна
@@ -68,8 +67,6 @@
     });
     evt.preventDefault();
   });
-
-
 
   window.dialog = {
     userDialog: userDialog
