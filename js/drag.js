@@ -1,7 +1,7 @@
 // Файл drag.js
 'use strict';
 (function () {
-  var dialogHandler = window.dialog.userDialog.querySelector('.upload');
+  var dialogHandler = window.dialog.user.querySelector('.upload');
 
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -26,8 +26,8 @@
         y: moveEvt.clientY
       };
 
-      window.dialog.userDialog.style.top = (window.dialog.userDialog.offsetTop - shift.y) + 'px';
-      window.dialog.userDialog.style.left = (window.dialog.userDialog.offsetLeft - shift.x) + 'px';
+      window.dialog.user.style.top = (window.dialog.user.offsetTop - shift.y) + 'px';
+      window.dialog.user.style.left = (window.dialog.user.offsetLeft - shift.x) + 'px';
     };
 
 
