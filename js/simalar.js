@@ -39,15 +39,15 @@
     }));
   };
 
-  window.playersSetting.onEyesChange = function (color) {
+  window.playersSetting.onEyesChange = window.debounce(function (color) {
     eyesColor = color;
     updateWizards();
-  };
+  });
 
-  window.playersSetting.onCoatChange = function (color) {
+  window.playersSetting.onCoatChange = window.debounce(function (color) {
     coatColor = color;
     updateWizards();
-  };
+  });
 
   var successHandler = function (data) {
     wizards = data;
