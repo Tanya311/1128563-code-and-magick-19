@@ -16,7 +16,6 @@
     if (wizard.colorEyes === eyesColor) {
       rank += 1;
     }
-
     return rank;
   };
 
@@ -56,6 +55,5 @@
   };
 
   window.backend.load(successHandler, window.backend.errorHandler);
-
 
 })();

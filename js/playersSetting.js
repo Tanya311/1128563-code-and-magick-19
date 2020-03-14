@@ -24,7 +24,6 @@
     wizard.onCoatChange(coatColor);
   };
 
-
   /**
    * функция изменнения цвета глаз
    * @param {*} evt
