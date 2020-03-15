@@ -71,6 +71,6 @@
 
 
   window.dialog = {
-    userDialog: userDialog
+    user: userDialog
   };
 })();

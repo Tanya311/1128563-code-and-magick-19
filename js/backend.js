@@ -2,13 +2,13 @@
 'use strict';
 
 (function () {
+  var STATUS_CODE_OK = 200;
+  var TIMEOUT = 10000;
+  var TIMEOUT_MESSEGE = 2000;
   var Url = {
     POST: 'https://js.dump.academy/code-and-magick',
     GET: 'https://js.dump.academy/code-and-magick/data',
   };
-  var STATUS_CODE_OK = 200;
-  var TIMEOUT = 10000;
-  var TIMEOUT_MESSEGE = 2000;
 
   var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -63,15 +63,19 @@
     xhr.send();
   };
 
+  var createPopup = function () {
+    var popup = document.createElement('div');
+    popup.style = 'z-index: 100; margin: 30px auto; width: 550px; text-align: center; background-color: green;';
+    popup.style.position = 'absolute';
+    popup.style.left = 0;
+    popup.style.right = 0;
+    popup.style.fontSize = '25px';
+    return popup;
+  };
+
 
   var okSaveHandler = function () {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 30px auto; width: 550px; text-align: center; background-color: green;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '25px';
-
+    var node = createPopup();
 
     node.textContent = 'Данные успешно отправлены';
     document.body.insertAdjacentElement('afterbegin', node);
@@ -83,13 +87,8 @@
   };
 
   var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 30px auto; width: 550px; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '25px';
-
+    var node = createPopup();
+    node.style.background = 'red';
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
